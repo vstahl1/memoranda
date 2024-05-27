@@ -14,3 +14,20 @@ dependencies {
   implementation 'net.sourceforge.nekohtml:nekohtml:1.9.+'
 }
 
+// Set the version
+version = '1.0.0'
+
+// Generate build number or use a timestamp
+def buildNumber = System.getenv("BUILD_NUMBER") ?: "localBuild"
+
+// Task to generate a properties file with version and build info
+task generateVersionProperties {
+    doLast {
+        def props = new Properties()
+        file("src/main/resources/version.properties").withOutputStream { out ->
+            props.setProperty("version", project.version)
+            props.setProperty("buildNumber", buildNumber)
+            props.store(out, null)
+        }
+    }
+}
