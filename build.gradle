@@ -31,3 +31,24 @@ task generateVersionProperties {
         }
     }
 }
+
+// plugins {
+//     id 'java'
+// }
+
+repositories {
+    mavenCentral()
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Main-Class': 'main.java.memoranda.App'  // Make sure to point to the correct main class with package
+    }
+    archiveBaseName = 'vstahl1_group2'
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+
